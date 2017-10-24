@@ -15,9 +15,13 @@ void driver_decyption();
 template<typename Item_type>
 void loadFromFile(vector<Item_type> &data);
 void SaveToFile( string filename,const vector<char> Data, ofstream &myfile);
+int simplifyMod(int root, int exponent, int modValue);
+
 
 int main()
 {
+    //to solve a^b%c use simplifyMod(a,b,c)%c
+
     system("clear");
     driver_decyption();
     return 0;
@@ -116,3 +120,25 @@ void vector_print(vector<Item_type>& encrypted)
     cout<<endl;
 }
 
+int simplifyMod(int root, int exponent, int modValue)
+{
+    if(exponent > 1)
+    {
+        if(root < modValue)
+        {
+            if(exponent % 2 == 0)
+            {
+                return simplifyMod(pow(root, 2), exponent/2, modValue);
+            }
+            else if(exponent % 2 == 1)
+            {
+                return(simplifyMod(pow(root, 2), exponent/2, modValue)*simplifyMod(root, 1, modValue));
+            }
+        }
+        else if(root >= modValue)
+        {
+            return simplifyMod(root%modValue, exponent, modValue);
+        }
+    }
+    return root%modValue;
+}
