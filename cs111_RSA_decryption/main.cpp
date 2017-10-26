@@ -20,7 +20,7 @@ int simplifyMod(int root, int exponent, int modValue);
 
 int main()
 {
-    //to solve a^b%c use simplifyMod(a,b,c)%c
+
 
     system("clear");
     driver_decyption();
@@ -65,29 +65,19 @@ void decryption(vector<int>& encrypted,vector<char>& decrypted,int d,int n)
 {
     //+63
     int size=encrypted.size()-1;
-
-    int p1;
-    int p2;
-
-        p1=2;
-        cout<<"p2: ";
-        p2=d/2;
-        cout<<p2;
-
-
-    long long int hold1,hold2,hold_result;
+   long long int hold1,hold2,hold_result;
     char value;
     double c;
     for(int i=0;i<size;i++)
     {
         c=encrypted[i];
-       hold1= ((int)(pow(c,p1)))%n;
-       hold2=((int)(pow(c,p2)))%n;
-       hold_result=((hold1*hold2)%n);
-       cout<<"( hold: "<<hold_result<<")";
-       value=(char)(hold_result+64);
-       cout<<value<<" ";
-       cout<<endl;
+        cout<<"c= "<<c<<", hold= ";
+        hold1=simplifyMod(c, d, n);
+        cout<<hold1<<",hold result= ";
+       hold_result=(hold1%77);
+       cout<<hold_result<<", value= ";
+       value=(char)(hold_result+63);
+       cout<<value<<endl;
        decrypted.push_back(value);
     }
 
@@ -96,7 +86,7 @@ void decryption(vector<int>& encrypted,vector<char>& decrypted,int d,int n)
 void driver_decyption()
 {
       ofstream myfile;
-       int d=6;
+       int d=37;//
       int n=77;
        string s;
        string filename_input;
